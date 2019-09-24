@@ -1,0 +1,32 @@
+img{
+    display: inline-block;
+}
+
+.descriptionBlock {
+    display: grid;
+    grid-template-columns: 310px 1fr;
+    grid-template-rows: 1fr;
+    padding: 10px;
+}
+.description{
+
+}
+.description .item{
+
+}
+.item{
+    position: relative;
+    width: auto;
+    height: 70px;
+    font-size: 1.1em;
+    font-family: Roboto;
+}
+.item img{
+    position: absolute;
+    top:-15%;
+    width: 100px;
+}.item .title{
+    font-weight: bold;
+    font-size: 1.3em;
+    font-family: Roboto;
+}
