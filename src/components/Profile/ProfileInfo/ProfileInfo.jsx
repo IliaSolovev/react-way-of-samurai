@@ -17,14 +17,14 @@ const ProfileInfo = (props) => {
         <div className={s.description}>
           <div className={s.item}>
             <ProfileStatus
-              status={'Hello'}
+              status={props.status} updateStatus={props.updateStatus}
             />
           </div>
           <div className={s.item}>
             <span className={s.title}>Name: </span> {profileState.fullName}
           </div>
           <div className={s.item}>
-            <span className={s.title}>Status: </span> {profileState.aboutMe}
+            <span className={s.title}>Job status: </span> {profileState.aboutMe}
           </div>
           <div className={s.item}>
             <span className={s.title}>Job description:</span> {profileState.lookingForAJobDescription}

@@ -24,12 +24,24 @@ export const userAPI = {
 };
 
 export const authAPI ={
-  login(){
+  me(){
     return  instance.get(`auth/me`).then( response => response.data)
+  },
+  login(email,password,rememberMe = false){
+    return instance.post(`auth/login`,{email,password,rememberMe})
+  },
+  logout(email,password,rememberMe = false){
+    return instance.delete(`auth/login`)
   }
 };
 export const profileAPI = {
-  getProfile(id){
-    return  instance.get(`profile/${id}`).then(response => response.data)
+  getProfile(userId){
+    return  instance.get(`profile/${userId}`).then(response => response.data)
+  },
+  getStatus(userId){
+    return instance.get(`profile/status/${userId}`)
+  },
+  updateStatus(status){
+    return instance.put(`profile/status`,{ status: status })
   }
 };
