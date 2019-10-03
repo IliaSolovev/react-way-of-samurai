@@ -30,3 +30,6 @@ img{
     font-size: 1.3em;
     font-family: Roboto;
 }
+.smallImgBlock img{
+    width: 250px;
+}

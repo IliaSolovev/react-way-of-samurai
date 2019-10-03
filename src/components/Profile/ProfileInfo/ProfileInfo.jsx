@@ -3,7 +3,9 @@ import s from './ProfileInfo.module.css';
 import Preloader from "../../common/Preloader/Preloader";
 import needJob from './image/need-a-job.jpg'
 import notNeedJob from './image/what-not-to-do-when-turning-down-a-job-offer.png'
-import ProfileStatus from "./ProfileStatus";
+import UserPhoto from './../../../assets/image/user.png'
+
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 const ProfileInfo = (props) => {
   let profileState = props.profile;
@@ -13,12 +15,13 @@ const ProfileInfo = (props) => {
   return (
     <div>
       <div className={s.descriptionBlock}>
-        <div className={s.imgBlock}><img src={profileState.photos.large} alt="ava"/></div>
+        <div className={profileState.photos.large ? s.imgBlock : s.smallImgBlock}>
+          <img src={profileState.photos.large ? profileState.photos.large : UserPhoto} alt="ava"/>
+        </div>
         <div className={s.description}>
           <div className={s.item}>
-            <ProfileStatus
-              status={props.status} updateStatus={props.updateStatus}
-            />
+            <ProfileStatusWithHooks
+              status={props.status} updateStatus={props.updateStatus}/>
           </div>
           <div className={s.item}>
             <span className={s.title}>Name: </span> {profileState.fullName}

@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {Route, withRouter} from "react-router-dom";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import {BrowserRouter, Route, withRouter} from "react-router-dom";
 import UsersContainer from "./components/users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainet";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginContainer from "./components/Login/LoginContainer";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
+import store from "./redux/redux-store";
+import {WithSuspense} from "./hoc/withSuspense";
 
+const DialogsContainer = React.lazy(()=> import("./components/Dialogs/DialogsContainer"))
+const ProfileContainer = React.lazy(()=> import("./components/Profile/ProfileContainer"))
 
 class App extends Component {
   componentDidMount() {
@@ -19,16 +21,16 @@ class App extends Component {
   }
 
   render() {
-    if(!this.props.initialized) return <Preloader/>
+    if (!this.props.initialized) return <Preloader/>
     return (
       <div className='app-wrapper'>
         <HeaderContainer/>
         <Navbar/>
         <div className='app-wrapper-content'>
           <Route path='/dialogs'
-                 render={() => <DialogsContainer/>}/>
+                 render={WithSuspense(DialogsContainer)}/>
           <Route path='/profile/:userId?'
-                 render={() => <ProfileContainer/>}/>
+                 render={WithSuspense(ProfileContainer)}/>
           <Route path='/users'
                  render={() => <UsersContainer/>}/>
           <Route path='/login'
@@ -45,7 +47,19 @@ const mapStateToProps = (state) => {
   }
 };
 
-export default compose(
+let AppContainer = compose(
   withRouter,
   connect(mapStateToProps, {initializeApp})
 )(App);
+
+const MainApp = (props) => {
+  return (
+    <BrowserRouter>
+      <Provider store={store}>
+        <AppContainer/>
+      </Provider>
+    </BrowserRouter>
+  )
+};
+
+export default MainApp;
